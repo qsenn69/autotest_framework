@@ -46,19 +46,27 @@ class Header(BasePage):
         button = self.page.locator(f'{self.base_locator} button[data-test-id="round-button"]')
         button.click()
     
+    # def fill_origin(self, city: str):
+    #     selector = '[data-test-id="origin-input"]'
+    #     self.wait_for_element(selector)
+    #     origin = self.page.locator(selector)
+    #     origin.click()
+    #     origin.fill(city)
+
     def fill_origin(self, city: str):
-        selector = '[data-test-id="origin-input"]'
-        self.wait_for_element(selector)
-        origin = self.page.locator(selector)
-        origin.click()
-        origin.fill(city)
+        self.page.locator('[data-test-id="origin-input"]').click()
+        self.page.locator('[data-test-id="origin-input"]').fill(city)
+
+    # def fill_destination(self, city: str):
+    #     selector = '[data-test-id="destination-input"]'
+    #     self.wait_for_element(selector)
+    #     destination = self.page.locator(selector)
+    #     destination.click()
+    #     destination.fill(city)
 
     def fill_destination(self, city: str):
-        selector = '[data-test-id="destination-input"]'
-        self.wait_for_element(selector)
-        destination = self.page.locator(selector)
-        destination.click()
-        destination.fill(city)      
+        self.page.locator('[data-test-id="destination-input"]').click()
+        self.page.locator('[data-test-id="destination-input"]').fill(city)
 
     def select_start_date(self, start_date: str):
         self.page.locator('[data-test-id="start-date-field"]').click()

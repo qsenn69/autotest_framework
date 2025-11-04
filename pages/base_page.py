@@ -6,7 +6,7 @@ from playwright.sync_api import TimeoutError
 class BasePage:
     def __init__(self, page: Page):
         self.page = page
-        self.base_locator = ""
+        self.base_locator = "s__GkNOd0J0D3cppEDs s___Ih4FphCv9oj087o s__l_V_9vGK0U9NXGCh"
 
     def open(self, url: str):
         self.page.goto(url)

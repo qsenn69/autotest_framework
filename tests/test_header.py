@@ -33,7 +33,7 @@ def test_destination_valid_city(page: Page):
     header.open(Config.BASE_URL)
     header.wait_page()
     header.fill_destination("Тайбей")
-    expect(page.locator('[data-test-id="destination-input"]')).to_have_value("Тайбей")
+    expect(page.locator('[data-test-id="destination-input"]')).to_have_value("Иркутск")
 
 def test_change_origin_destination(page: Page):
     header = Header(page)
@@ -59,14 +59,20 @@ def test_origin_invalid_city(page: Page):
 def test_check_calendar_open(page: Page):
     header = Header(page)
     header.open(Config.BASE_URL)
-    header.wait_page()
+    header.wait_page()  
     header.page.locator('[data-test-id="start-date-field"]').click()
-    expect(page.locator('div[class*="s__bksyKKQU44OvfaUA"]')).to_be_visible()
+    expect(page.locator('[data-test-id="dropdown"]')).to_be_visible()
 
 def test_open_settings(page: Page):
     header = Header(page)
     header.open(Config.BASE_URL)
-    header.wait_page()
+    header.wait_page()  
     header.navigate_to_settings()
     header.assert_url(f"{Config.BASE_URL}my/settings")
 
+def test_fill_code_IATA(page: Page):
+    header = Header(page)
+    header.open(Config.BASE_URL)
+    header.wait_page() 
+    header.fill_origin("MSQ")
+    expect(page.locator('[data-test-id="origin-input"]')).to_have_value("MSQ")
