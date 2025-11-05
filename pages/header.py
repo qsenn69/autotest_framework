@@ -1,5 +1,6 @@
 from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
+from utils.selectors import HeaderSelectors
 
 class Header(BasePage):
 
@@ -8,29 +9,51 @@ class Header(BasePage):
         self.base_locator = 'div[class*="s__n3XNjPDywfBvSKwc"]'
 
     def navigate_to_home(self):
-        self.page.click('[data-test-id="logo"]')
+        self.page.click(HeaderSelectors.LOGO_BUTTON)
 
     def navigate_to_settings(self):
-        self.page.click('[data-test-id="profile-button"]')
-        self.page.get_by_text("Настройки").click()
+        self.page.click(HeaderSelectors.PROFILE_BUTTON)
+        self.page.get_by_text(HeaderSelectors.SETTINGS_BUTTON).click()
     
     def navigate_to_magazine(self):
-        self.page.click('[data-test-id="header-blog-button"]')
+        self.page.click(HeaderSelectors.MAGAZINE_BUTTON)
     
     def navigate_to_support(self):
-        self.page.click('[data-test-id="header-support-button"]')
+        self.page.click(HeaderSelectors.SUPPORT_BUTTON)
     
     def navigate_to_hotels(self):
-        self.page.get_by_role('link', name="Отели").click()
+        self.page.get_by_role('link', name=HeaderSelectors.HOTELS_BUTTON).click()
 
     def navigate_to_guides(self):
-        self.page.get_by_role('link', name="Короче").click()
+        self.page.get_by_role('link', name=HeaderSelectors.GUIDES_BUTTON).click()
 
     def navigate_to_favorites(self):
-        self.page.get_by_role('link', name="Избранное").click
+        self.page.get_by_role('link', name=HeaderSelectors.FAVORITES_BUTTON).click
 
     def navigate_to_b2b(self):
-        self.page.get_by_role('link', name="Для бизнеса").click()
+        self.page.get_by_role('link', name=HeaderSelectors.B2B_BUTTON).click()
+
+    def change_origin_destination(self):   
+        self.page.locator(HeaderSelectors.CHANGE_OF_DIRECTIONS_BUTTON).click()
+
+    def fill_origin(self, city: str):
+        self.page.locator(HeaderSelectors.ORIGIN_INPUT).click()
+        self.page.locator(HeaderSelectors.ORIGIN_INPUT).fill(city)
+
+    def fill_destination(self, city: str):
+        self.page.locator(HeaderSelectors.DESTINATION_INPUT).click()
+        self.page.locator(HeaderSelectors.DESTINATION_INPUT).fill(city)
+
+    def select_start_date(self, start_date: str):
+        self.page.locator(HeaderSelectors.START_DATE_FIELD).click()
+        self.page.locator(f'[data-test-id="date-{start_date}"]').click()
+
+    def select_end_date(self, end_date: str):
+        self.page.locator(HeaderSelectors.END_DATE_FIELD).click()
+        self.page.locator(f'[data-test-id="date-{end_date}"]').click()
+
+    def click_button_search(self):
+        self.page.locator(HeaderSelectors.SEARCH_BUTTON).click()
 
     def set_text_field_value_by_id(self, data_test_id: str, value: str):
         origin = self.page.locator(self.base_locator+'//[data-test-id="'+data_test_id+'"]")+""]')
@@ -41,40 +64,3 @@ class Header(BasePage):
         origin = self.page.locator('[contains(@class, "'+class_name+'")]')
         origin.click()
         origin.fill(value)
-
-    def change_origin_destination(self):   
-        button = self.page.locator(f'{self.base_locator} button[data-test-id="round-button"]')
-        button.click()
-    
-    # def fill_origin(self, city: str):
-    #     selector = '[data-test-id="origin-input"]'
-    #     self.wait_for_element(selector)
-    #     origin = self.page.locator(selector)
-    #     origin.click()
-    #     origin.fill(city)
-
-    def fill_origin(self, city: str):
-        self.page.locator('[data-test-id="origin-input"]').click()
-        self.page.locator('[data-test-id="origin-input"]').fill(city)
-
-    # def fill_destination(self, city: str):
-    #     selector = '[data-test-id="destination-input"]'
-    #     self.wait_for_element(selector)
-    #     destination = self.page.locator(selector)
-    #     destination.click()
-    #     destination.fill(city)
-
-    def fill_destination(self, city: str):
-        self.page.locator('[data-test-id="destination-input"]').click()
-        self.page.locator('[data-test-id="destination-input"]').fill(city)
-
-    def select_start_date(self, start_date: str):
-        self.page.locator('[data-test-id="start-date-field"]').click()
-        self.page.locator(f'[data-test-id="date-{start_date}"]').click()
-
-    def select_end_date(self, end_date: str):
-        self.page.locator('[data-test-id="end-date-field"]').click()
-        self.page.locator(f'[data-test-id="date-{end_date}"]').click()
-
-    def click_button_search(self):
-        self.page.locator('[data-test-id="form-submit"]').click()
