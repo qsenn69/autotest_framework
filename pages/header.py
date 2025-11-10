@@ -6,7 +6,7 @@ class Header(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self.base_locator = 'div[class*="s__n3XNjPDywfBvSKwc"]'
+        self.base_locator = 'div[class*="s__XzRjMGI2NDY1OTEy s__YTZhMDIyODQwN2Jh s__ZjgzYTQxODk0ZWE5"]'
 
     def navigate_to_home(self):
         self.page.click(HeaderSelectors.LOGO_BUTTON)
