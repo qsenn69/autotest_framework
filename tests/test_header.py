@@ -3,7 +3,12 @@ from utils.config import Config
 from pages.header import Header
 from utils.data import Data
 from utils.selectors import HeaderSelectors
-    
+import allure
+
+@allure.feature("Header Functionality")
+@allure.story("Search Functionality")
+@allure.title("Test Search with Valid Data")
+@allure.description("This test verifies that the search functionality works correctly with valid origin, destination, and date range.")
 def test_search(header: Header):
     start_form, end_form, start_url, end_url = Data.get_formatted_range(5, 12)
     header.fill_origin("Москва")
