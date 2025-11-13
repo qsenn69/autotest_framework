@@ -1,0 +1,9 @@
+version: "3"
+
+tasks:
+  gen-report:
+    desc: Generate the allure tests report
+    vars:
+      REPORT_DIR: "./allure-reports"
+    cmd: |
+      docker compose exec allure allure generate /app/allure-results --clean -o {{.REPORT_DIR}}
