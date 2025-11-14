@@ -33,3 +33,6 @@ class Config:
         Пример: Config.locator("header", "search_button")
         """
         return cls._load_locators()[section][key]
+
+def locator(section: str, key: str) -> str:
+    return Config.locator(section, key)
