@@ -4,8 +4,11 @@ from pages.header import Header
 from utils.data import Data
 import allure
 
-@allure.feature("Header Functionality")
-@allure.story("Search Functionality")
+pytestmark = [
+    allure.feature("Header Functionality"),
+    allure.story("Search Functionality")
+]
+
 @allure.title("Test Search with Valid Data")
 @allure.description("This test verifies that the search functionality works correctly with valid origin, destination, and date range.")
 def test_search(header: Header):
@@ -16,15 +19,18 @@ def test_search(header: Header):
     header.select_end_date(end_form)
     header.click_button_search()
     header.assert_url(f"{Config.BASE_URL}?params=MOW{start_url}TPE{end_url}1&with_request=true")
-    
+
+@allure.title("Test Search with Valid Data")
 def test_origin_valid_city(header: Header):
     header.fill_origin("Москва")
     expect(header.page.locator(Config.locator("header", "origin_input"))).to_have_value("Москва")
 
+@allure.title("Test Search with Valid Data")
 def test_destination_valid_city(header: Header):
     header.fill_destination("Иркутск")
     expect(header.page.locator(Config.locator("header", "destination_input"))).to_have_value("Иркутск")
 
+@allure.title("Test Change Origin and Destination")
 def test_change_origin_destination(header: Header):
     header.fill_origin("Москва")
     header.fill_destination("Фукуок")
@@ -33,19 +39,23 @@ def test_change_origin_destination(header: Header):
     expect(header.page.locator(Config.locator("header", "origin_input"))).to_have_value("Фукуок")
     expect(header.page.locator(Config.locator("header", "destination_input"))).to_have_value("Москва")
 
+@allure.title("Test Search with Invalid Origin City")
 def test_origin_invalid_city(header: Header):
     header.fill_origin("Ксилоран")
     expect(header.page.locator(Config.locator("header", "origin_input"))).to_have_value("Ксилоран")
     expect(header.page.get_by_text(Config.locator("header", "no_results_dropdown"))).to_be_visible()
 
+@allure.title("Test Search with Invalid Destination City")
 def test_check_calendar_open(header: Header):  
     header.page.locator(Config.locator("header", "start_date_field")).click()
     expect(header.page.locator(Config.locator("header", "calendar_dropdown"))).to_be_visible()
 
+@allure.title("Test Open Settings Page")
 def test_open_settings(header: Header): 
     header.navigate_to_settings()
     header.assert_url(f"{Config.BASE_URL}my/settings")
 
+@allure.title("Test Fill IATA Code in Origin Field")
 def test_fill_code_IATA(header: Header):
     header.fill_origin("MSQ")
     expect(header.page.locator(Config.locator("header", "origin_input"))).to_have_value("MSQ")
